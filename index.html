@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mecks's Vacation Getaways 🌴</title><style>
+body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:linear-gradient(#bdeeff,#fff6dc 60%,#ffe2b8);color:#23324a;min-height:100vh}
+header{text-align:center;padding:24px 12px 8px}h1{margin:6px 0;font-size:clamp(1.6rem,5vw,2.6rem);color:#0b7a75}
+.note{max-width:760px;margin:0 auto;font-size:.9rem;opacity:.85;padding:0 12px}.last{font-weight:600;margin:8px 0}
+main{max-width:900px;margin:16px auto;padding:0 10px}table{width:100%;border-collapse:collapse;background:#fffc;border-radius:14px;overflow:hidden;box-shadow:0 4px 18px #0002}
+th,td{padding:10px 8px;text-align:left;border-bottom:1px solid #f0e2c8;font-size:.95rem}th{background:#ff9f68;color:#fff}
+td a{color:inherit;font-weight:600}.deal{background:#c9f7d0;color:#11632a;border-radius:8px;padding:2px 6px}.dt{display:block;font-size:.8rem;opacity:.75}
+.legend{margin:12px 0;font-size:.9rem}@media(max-width:600px){th,td{padding:7px 4px;font-size:.82rem}}
+</style></head><body><header>
+<svg width="110" height="110" viewBox="0 0 120 120" aria-label="palm tree"><circle cx="92" cy="26" r="14" fill="#ffd34d"/><ellipse cx="60" cy="110" rx="46" ry="8" fill="#f2c27b"/><path d="M58 108 C62 85 60 62 66 44" stroke="#9a6234" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#2fae6b"><path d="M66 44 C50 28 30 30 18 42 C34 38 50 40 66 44Z"/><path d="M66 44 C78 26 98 28 108 40 C92 36 80 38 66 44Z"/><path d="M66 44 C58 24 64 12 76 6 C70 20 70 32 66 44Z"/><path d="M66 44 C46 44 34 56 32 70 C42 58 54 50 66 44Z"/><path d="M66 44 C84 46 94 58 96 72 C86 60 76 52 66 44Z"/></g><circle cx="64" cy="47" r="4" fill="#7a4a22"/><circle cx="70" cy="48" r="4" fill="#7a4a22"/></svg>
+<h1>🌴 Mecks's Vacation Getaways 🌴</h1><div class="last" id="last">Last checked: Oct 11, 2026</div>
+<p class="note">Lowest Southwest round-trip fares from LAX, from Google Flights' date calendar (Southwest only), 3-night trips over the next 90 days. Prices exclude $5.60 per-leg fees. Stops not yet verified.</p></header>
+<main><div class="legend"><span class="deal">$123</span> = under $200 round trip ✈️ (tap a price to open Google Flights)</div>
+<table><thead><tr><th>Destination</th><th>Cheapest Fri–Mon</th><th>Cheapest Thu–Sun</th><th>Best price</th></tr></thead><tbody id="rows"></tbody></table></main>
+<script>const INLINE=/*INLINE*/null;
+const f=d=>new Date(d+"T12:00:00Z").toLocaleDateString("en-US",{month:"short",day:"numeric",timeZone:"UTC"});
+const p=(v,u)=>`<a href="${u}" target="_blank" rel="noopener"><span class="${v<200?'deal':''}">$${v}</span></a>`;
+function render(d){document.getElementById('last').textContent='Last checked: '+d.lastChecked;
+const r=d.routes.map(x=>({...x,best:Math.min(x.friMon.price,x.thuSun.price)})).sort((a,b)=>a.best-b.best);
+document.getElementById('rows').innerHTML=r.map(x=>{const b=x.friMon.price<=x.thuSun.price?x.friMon:x.thuSun;
+const c=t=>`${p(t.price,t.url)}<span class="dt">${f(t.depart)} – ${f(t.return)}</span>`;
+return `<tr><td><b>${x.name}</b> <span class="dt">${x.code}</span></td><td>${c(x.friMon)}</td><td>${c(x.thuSun)}</td><td>${p(x.best,b.url)}</td></tr>`}).join('')}
+INLINE?render(INLINE):fetch('data.json').then(r=>r.json()).then(render);</script></body></html>
